@@ -1,0 +1,31 @@
+ul {
+  list-style-type: none;
+  overflow: hidden;
+  list-style-position: inside;
+}
+
+.send-msg {
+  float: right;
+}
+
+.received-msg {
+  float: left;
+  background: #c1c1c1;
+}
+
+.chats {
+  height: 90%;
+  overflow-x: scroll;
+  overflow-x: hidden;
+}
+
+.chats ul li {
+  list-style: none;
+  clear: both;
+  font-size: 13px;
+  overflow: auto;
+  overflow-wrap: break-word;
+  margin-top: 6pt;
+  width: 50%;
+  padding: 4px;
+}
