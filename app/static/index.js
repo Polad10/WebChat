@@ -1,3 +1,5 @@
+const ref = React.createRef();
+
 class ChatWindow extends React.Component {
   constructor(props) {
     let socket = io();
@@ -13,13 +15,13 @@ class ChatWindow extends React.Component {
   }
 
   handleReceive(msg) {
-    var newMsg = <ReceivedMessage message={msg} />;
+    var newMsg = <ReceivedMessage key={msg.substring(1, 10)} message={msg} />;
     var msgs = this.state.messages.concat([newMsg]);
     this.setState({ messages: msgs, socket: this.state.socket });
   }
 
   handleSend(msg) {
-    var newMsg = <SentMessage message={msg} />;
+    var newMsg = <SentMessage key={msg.substring(0, 10)} message={msg} />;
     var msgs = this.state.messages.concat([newMsg]);
     this.setState({ messages: msgs, socket: this.state.socket });
     this.state.socket.send(msg);
@@ -30,7 +32,11 @@ class ChatWindow extends React.Component {
       this.handleSend(document.getElementById("msg").value);
     }
   };
-
+  componentDidUpdate() {
+    ref.current.scrollIntoView({
+      behavior: "smooth"
+    });
+  }
   render() {
     return (
       <React.Fragment>
@@ -69,7 +75,9 @@ class Chat extends React.Component {
   render() {
     return (
       <div className="chats">
-        <ul className="p-0">{this.props.messages}</ul>
+        <ul key="ul" className="p-0">
+          {this.props.messages}
+        </ul>
       </div>
     );
   }
@@ -77,12 +85,18 @@ class Chat extends React.Component {
 
 function SentMessage(props) {
   return (
-    <li className="bg-primary send-msg text-white rounded">{props.message}</li>
+    <li ref={ref} className="bg-primary send-msg text-white rounded">
+      {props.message}
+    </li>
   );
 }
 
 function ReceivedMessage(props) {
-  return <li className="received-msg rounded">{props.message}</li>;
+  return (
+    <li ref={ref} className="received-msg rounded">
+      {props.message}
+    </li>
+  );
 }
 
 ReactDOM.render(<ChatWindow />, document.getElementById("root"));
