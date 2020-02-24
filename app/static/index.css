@@ -6,10 +6,12 @@ ul {
 
 .send-msg {
   float: right;
+  text-align: left;
 }
 
 .received-msg {
   float: left;
+  text-align: left;
   background: #c1c1c1;
 }
 

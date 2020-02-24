@@ -8,5 +8,4 @@ def index():
 
 @socketio.on("message")
 def test(message):
-    console.log(message);
-    socketio.send(message);
+    socketio.send(message)
