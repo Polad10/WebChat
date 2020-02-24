@@ -20,10 +20,16 @@ class ChatWindow extends React.Component {
     this.setState({ messages: msgs, socket: this.state.socket });
   }
 
+  clearInputField() {
+    console.log("clearing input field");
+    ReactDOM.findDOMNode(this.refs.textbox).value = "";
+  }
+
   handleSend(msg) {
     var newMsg = <SentMessage key={msg.substring(0, 10)} message={msg} />;
     var msgs = this.state.messages.concat([newMsg]);
     this.setState({ messages: msgs, socket: this.state.socket });
+    this.clearInputField();
     this.state.socket.send(msg);
   }
 
@@ -46,6 +52,7 @@ class ChatWindow extends React.Component {
             <input
               id="msg"
               type="text"
+              ref="textbox"
               className="form-control"
               placeholder="Recipient's username"
               aria-label="Recipient's username"
