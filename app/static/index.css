@@ -26,6 +26,6 @@ ul {
   overflow: auto;
   overflow-wrap: break-word;
   margin-top: 6pt;
-  width: 50%;
+  max-width: 75%;
   padding: 4px;
 }

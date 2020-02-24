@@ -8,6 +8,5 @@ def index():
 
 @socketio.on("message")
 def test(message):
-    print(message)
-    time.sleep(5)
-    socketio.send("Yes, you are!")
+    console.log(message);
+    socketio.send(message);
