@@ -2,14 +2,21 @@ class ChatWindow extends React.Component {
   constructor(props)
   {
     let socket = io();
-    socket.on('message', (msg) => {
+
+    socket.on('serverSend', (msg) => {
+      console.log(msg);
       this.handleReceive(msg);
     });
+
+    socket.on('connect', () => {
+      socket.emit('join', this.state.room);
+    })
 
     super(props);
     this.state = {
       messages: [],
-      socket: socket
+      socket: socket,
+      room: 1
     };
   }
 
@@ -17,15 +24,15 @@ class ChatWindow extends React.Component {
   {
     var newMsg = <ReceivedMessage message={msg} />;
     var msgs = this.state.messages.concat([newMsg]);
-    this.setState({messages: msgs, socket: this.state.socket});
+    this.setState({messages: msgs, socket: this.state.socket, room: this.state.room});
   }
 
   handleSend(msg)
   {
     var newMsg = <SentMessage message={msg} />;
     var msgs = this.state.messages.concat([newMsg]);
-    this.setState({messages: msgs, socket: this.state.socket});
-    this.state.socket.send(msg);
+    this.setState({messages: msgs, socket: this.state.socket, room: this.state.room});
+    this.state.socket.emit('clientSend', {message: msg, room: this.state.room});
   }
 
   render() {
